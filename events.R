@@ -11,7 +11,7 @@ library(ggplot2)
 library(reshape)
 library(lme4)
 
-
+#cleaning
 raw =read.delim("Raw\event\file.csv",sep = ',',header=T)
 name = "sub-FXXXXXX"
 
@@ -39,13 +39,13 @@ n = nrow(events)
 compevent = compevent[kronecker(1:n, c(-1, n), "+"), ]
 
 
-# Réinitialiser les indices
+# RÃ©initialiser les indices
 rownames(compevent) <- NULL
 events = compevent
 
 
 for (i in 1:nrow(events)) {
-  # Si la valeur dans la colonne "response" est "y", ajouter une ligne supplémentaire
+  # Si la valeur dans la colonne "response" est "y", ajouter une ligne supplÃ©mentaire
   if (events$response[i] == "y") {
     nouvelle_ligne = data.frame(events[i,])
     nouvelle_ligne$type = "resp"
@@ -54,12 +54,12 @@ for (i in 1:nrow(events)) {
     events = rbind(events[1:i, , drop = FALSE], nouvelle_ligne, events[(i+1):nrow(events), , drop = FALSE])
   }
 }
-# Réinitialiser les indices
+# RÃ©initialiser les indices
 rownames(events) <- NULL
 
 
 for (i in 1:nrow(events)) {
-  # Si la valeur dans la colonne "response" est "y", ajouter une ligne supplémentaire
+  # Si la valeur dans la colonne "response" est "y", ajouter une ligne supplÃ©mentaire
   if (events$Midbreak[i] == "y") {
     nouvelle_ligne = data.frame(events[(i+1),])
     nouvelle_ligne$type = "break"
@@ -68,7 +68,7 @@ for (i in 1:nrow(events)) {
     events = rbind(events[1:i, , drop = FALSE], nouvelle_ligne, events[(i+1):nrow(events), , drop = FALSE])
   }
 }
-# Réinitialiser les indices
+# RÃ©initialiser les indices
 rownames(events) <- NULL
 
 events2 = events
